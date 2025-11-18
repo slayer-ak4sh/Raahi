@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rentapp/data/models/car.dart';
-import 'package:rentapp/presentation/pages/MapsDetailsPage.dart';
+import 'package:rentapp/presentation/pages/google_maps_page.dart';
+import 'package:rentapp/presentation/pages/booking_page.dart';
 import 'package:rentapp/presentation/widgets/car_card.dart';
 import 'package:rentapp/presentation/widgets/more_card.dart';
 
@@ -35,7 +36,7 @@ class _CardDetailsPageState extends State<CardDetailsPage> with SingleTickerProv
 
   @override
   void dispose() {
-    _controller!.forward();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -43,7 +44,7 @@ class _CardDetailsPageState extends State<CardDetailsPage> with SingleTickerProv
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.info_outline),
@@ -54,18 +55,18 @@ class _CardDetailsPageState extends State<CardDetailsPage> with SingleTickerProv
       body: Column(
         children: [
           CarCard(car: Car(model: widget.car.model, distance: widget.car.distance, fuelCapacity: widget.car.fuelCapacity, pricePerHour: widget.car.pricePerHour)),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                        color: Color(0xffF3F3F3),
+                        color: const Color(0xffF3F3F3),
                         borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                               color: Colors.black12,
                               blurRadius: 10,
@@ -73,7 +74,7 @@ class _CardDetailsPageState extends State<CardDetailsPage> with SingleTickerProv
                           )
                         ]
                     ),
-                    child: Column(
+                    child: const Column(
                       children: [
                         CircleAvatar(radius: 40, backgroundImage: AssetImage('assets/user.png'),),
                         SizedBox(height: 10,),
@@ -83,20 +84,20 @@ class _CardDetailsPageState extends State<CardDetailsPage> with SingleTickerProv
                     ),
                   ),
                 ),
-                SizedBox(width: 20,),
+                const SizedBox(width: 20,),
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MapsDetailsPage(car: widget.car))
+                          MaterialPageRoute(builder: (context) => GoogleMapsPage(car: widget.car))
                       );
                     },
                     child: Container(
                       height: 170,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 10,
@@ -119,17 +120,37 @@ class _CardDetailsPageState extends State<CardDetailsPage> with SingleTickerProv
             ),
           ),
           Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                MoreCard(car: Car(model: widget.car.model+"-1", distance: widget.car.distance+100, fuelCapacity: widget.car.fuelCapacity+100, pricePerHour: widget.car.pricePerHour+10)),
-                SizedBox(height: 5,),
-                MoreCard(car: Car(model: widget.car.model+"-2", distance: widget.car.distance+200, fuelCapacity: widget.car.fuelCapacity+200, pricePerHour: widget.car.pricePerHour+20)),
-                SizedBox(height: 5,),
-                MoreCard(car: Car(model: widget.car.model+"-3", distance: widget.car.distance+300, fuelCapacity: widget.car.fuelCapacity+300, pricePerHour: widget.car.pricePerHour+30)),
+                MoreCard(car: Car(model: "${widget.car.model}-1", distance: widget.car.distance+100, fuelCapacity: widget.car.fuelCapacity+100, pricePerHour: widget.car.pricePerHour+10)),
+                const SizedBox(height: 5,),
+                MoreCard(car: Car(model: "${widget.car.model}-2", distance: widget.car.distance+200, fuelCapacity: widget.car.fuelCapacity+200, pricePerHour: widget.car.pricePerHour+20)),
+                const SizedBox(height: 5,),
+                MoreCard(car: Car(model: "${widget.car.model}-3", distance: widget.car.distance+300, fuelCapacity: widget.car.fuelCapacity+300, pricePerHour: widget.car.pricePerHour+30)),
               ],
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BookingPage(car: widget.car)),
+                  );
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                child: const Text(
+                  'Book This Car',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR_OWN_KEY',
+    apiKey: 'AIzaSyDummy_Key_For_Testing_Replace_With_Real',
     appId: '1:961519639955:android:eeef99891c5b9ed27f1c66',
     messagingSenderId: '961519639955',
     projectId: 'rentapp-fg-x',
